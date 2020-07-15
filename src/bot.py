@@ -18,6 +18,12 @@ builder = embed_builder.EmbedBuilder(config)
 
 @bot.command(name='poke')
 async def display_pokemon(ctx, species):
+    """
+    Return formatted data about the 
+    called pokemon by user. 
+    
+    @call: !poke {id or name}
+    """
     pkmn_data = poke_api.get_pokemon_data(species)
     pkmn_desc = poke_api.get_pokemon_description(species)
 
