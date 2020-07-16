@@ -1,4 +1,4 @@
-import src
+import pokeapi
 import discord
 from enum import Enum
 
@@ -10,7 +10,7 @@ class EmbedBuilder:
 
 
     def open_pokeapi(self):
-        self.poke_api = src.PokeAPI(self.config)
+        self.poke_api = pokeapi.PokeAPI(self.config)
 
 
     def pokemon_message(self, pkmn_data, pkmn_desc):
@@ -48,6 +48,7 @@ class EmbedBuilder:
             counter += 1
 
         return text[:-2]
+
 
     def __build_pokemon_default_data_text(self, pkmn_data, pkmn_desc):
         """
