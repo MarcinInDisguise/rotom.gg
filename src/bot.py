@@ -5,15 +5,16 @@ import yaml
 from discord.ext import commands
 from dotenv import load_dotenv
 
-import pokeapi_manager
+import pokeapi
 import embed_builder
 
 load_dotenv()
 bot = commands.Bot(command_prefix='!')
 
-config = yaml.load(open('configs//config.yml', 'r'), Loader=yaml.FullLoader)
-poke_api = pokeapi_manager.PokeApiManager(config)
+config = yaml.load(open(os.getenv('CONFIG_FILE'), 'r'), Loader=yaml.FullLoader)
+poke_api = pokeapi.PokeAPI(config)
 builder = embed_builder.EmbedBuilder(config)
+builder.open_pokeapi()
 
 
 @bot.command(name='poke')
@@ -27,7 +28,7 @@ async def display_pokemon(ctx, species):
     pkmn_data = poke_api.get_pokemon_data(species)
     pkmn_desc = poke_api.get_pokemon_description(species)
 
-    embed = builder.format_pokemon_message(pkmn_data, pkmn_desc)
+    embed = builder.pokemon_message(pkmn_data, pkmn_desc)
 
     await ctx.channel.send(embed=embed)
 

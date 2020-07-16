@@ -2,7 +2,7 @@ import yaml
 import requests
 import pathlib
 
-class PokeApiManager:
+class PokeAPI:
 
     def __init__(self, config):
         self.config = config
