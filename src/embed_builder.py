@@ -40,9 +40,9 @@ class EmbedBuilder:
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description="(ignoring abilities)", url="")
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
-        embed.add_field(name='Weaknesses', value=formated_weakness['weaknesses'], inline=False)
-        embed.add_field(name='Resistances', value=formated_weakness['resistances'], inline=False)
-        embed.add_field(name='Immunities', value=formated_weakness['immunities'], inline=False)
+        embed.add_field(name='Weaknesses', value=formated_weakness['weaknesses'] or '-', inline=False)
+        embed.add_field(name='Resistances', value=formated_weakness['resistances'] or '-', inline=False)
+        embed.add_field(name='Immunities', value=formated_weakness['immunities'] or '-', inline=False)
 
         return embed
 
