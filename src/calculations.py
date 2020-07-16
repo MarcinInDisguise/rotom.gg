@@ -9,6 +9,12 @@ class Calculations:
 
 
     def calc_weakness(self, first_type, second_type):
+        """
+        Method for calculating specific pokemon weakness
+        based on file pokemon-type-chart.json.
+
+        Method returns TypeWeakness object. 
+        """
         tw = type_weakness.TypeWeakness()
 
         with open(f'src\\resources\\pokemon-type-chart.json') as type_chart_file:
@@ -24,7 +30,7 @@ class Calculations:
 
             if second_type == None:
                 return tw
-                
+
             for item in type_chart:
                 if second_type in item['x0']:
                     weakness = setattr(tw, item['name'], getattr(tw, item['name']) * 0)
