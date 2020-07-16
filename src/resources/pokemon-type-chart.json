@@ -1,0 +1,109 @@
+[{
+    "name": "normal",
+    "x0": ["ghost"],
+    "x1/2": ["rock", "steel"],
+    "x2": []
+},
+{
+    "name": "fire",
+    "x0": [],
+    "x1/2": ["fire", "water", "rock", "dragon"],
+    "x2": ["grass", "ice", "bug", "steel"]
+},
+{
+    "name": "water",
+    "x0": [],
+    "x1/2": ["water", "grass", "dragon"],
+    "x2": ["fire", "ground", "rock"]
+},
+{
+    "name": "electric",
+    "x0": ["ground"],
+    "x1/2": ["electric", "grass", "dragon"],
+    "x2": ["water", "flying"]
+},
+{
+    "name": "grass",
+    "x0": [],
+    "x1/2": ["fire", "grass", "poison", "flying", "bug", "dragon", "steel"],
+    "x2": ["water", "ground", "rock"]
+},
+{
+    "name": "ice",
+    "x0": [],
+    "x1/2": ["fire", "water", "ice", "steel"],
+    "x2": ["grass", "ground", "flying", "dragon"]
+},
+{
+    "name": "fighting",
+    "x0": ["ghost"],
+    "x1/2": ["poison", "flying", "psychic", "bug", "fairy"],
+    "x2": ["normal", "ice", "rock", "dark", "steel"]
+},
+{
+    "name": "poison",
+    "x0": ["steel"],
+    "x1/2": ["poison", "ground", "rock", "ghost"],
+    "x2": ["grass", "fairy"]
+},
+{
+    "name": "ground",
+    "x0": ["flying"],
+    "x1/2": ["grass", "bug"],
+    "x2": ["fire", "electric", "poison", "rock", "steel"]
+},
+{
+    "name": "flying",
+    "x0": [],
+    "x1/2": ["electric", "rock", "steel"],
+    "x2": ["grass", "fighting", "bug"]
+},
+{
+    "name": "psychic",
+    "x0": ["dark"],
+    "x1/2": ["psychic", "steel"],
+    "x2": ["fighting", "poison"]
+},
+{
+    "name": "bug",
+    "x0": [],
+    "x1/2": ["fire", "fighting", "poison", "flying", "ghost", "steel", "fairy"],
+    "x2": ["grass", "psychic", "dark"]
+},
+{
+    "name": "rock",
+    "x0": [],
+    "x1/2": ["fighting", "ground", "steel"],
+    "x2": ["fire", "ice", "flying", "bug"]
+},
+{
+    "name": "ghost",
+    "x0": ["normal"],
+    "x1/2": ["dark"],
+    "x2": ["psychic", "ghost"]
+},
+{
+    "name": "dragon",
+    "x0": ["fairy"],
+    "x1/2": ["steel"],
+    "x2": ["dragon"]
+},
+{
+    "name": "dark",
+    "x0": [],
+    "x1/2": ["fighting", "dark", "fairy"],
+    "x2": ["psychic", "ghost"]
+},
+{
+    "name": "steel",
+    "x0": [],
+    "x1/2": ["fire", "water", "electric", "steel"],
+    "x2": ["ice", "rock", "fairy"]
+},
+{
+    "name": "fairy",
+    "x0": [],
+    "x1/2": ["fire", "poison", "steel"],
+    "x2": ["fighting", "dragon", "dark"]
+}
+]
