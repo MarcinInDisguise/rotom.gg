@@ -22,21 +22,21 @@ class Calculations:
 
             for item in type_chart:
                 if first_type in item['x0']:
-                    weakness = setattr(tw, item['name'], getattr(tw, item['name']) * 0)
+                    setattr(tw, item['name'], getattr(tw, item['name']) * 0)
                 if first_type in item['x2']:
-                    weakness = setattr(tw, item['name'], getattr(tw, item['name']) * 2)
+                    setattr(tw, item['name'], getattr(tw, item['name']) * 2)
                 if first_type in item['x1/2']:
-                    weakness = setattr(tw, item['name'], getattr(tw, item['name']) * 0.5)
+                    setattr(tw, item['name'], getattr(tw, item['name']) * 0.5)
 
             if second_type == None:
                 return tw
 
             for item in type_chart:
                 if second_type in item['x0']:
-                    weakness = setattr(tw, item['name'], getattr(tw, item['name']) * 0)
+                   setattr(tw, item['name'], getattr(tw, item['name']) * 0)
                 if second_type in item['x2']:
-                    weakness = setattr(tw, item['name'], getattr(tw, item['name']) * 2)
+                    setattr(tw, item['name'], getattr(tw, item['name']) * 2)
                 if second_type in item['x1/2']:
-                    weakness = setattr(tw, item['name'], getattr(tw, item['name']) * 0.5)
+                    setattr(tw, item['name'], getattr(tw, item['name']) * 0.5)
 
             return tw

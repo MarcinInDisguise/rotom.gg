@@ -31,9 +31,25 @@ class EmbedBuilder:
         return embed
 
 
+    def type_weakness_message(self, pkmn_data, weakness):
+        """
+        Build embed message about specific pokemon's weakness.
+        """
+        formated_weakness = self.__build_effectiveness_data(weakness)
+
+        embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description="(ignoring abilities)", url="")
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
+        embed.add_field(name='Weaknesses', value=formated_weakness['weaknesses'], inline=False)
+        embed.add_field(name='Resistances', value=formated_weakness['resistances'], inline=False)
+        embed.add_field(name='Immunities', value=formated_weakness['immunities'], inline=False)
+
+        return embed
+
+
     def __build_pokemon_basic_stats_text(self, pkmn_data):
         """
-        Build default data about base stats 
+        Format default data about base stats 
         of specific pokemon.
 
         Remove last two chars from string to 
@@ -52,7 +68,7 @@ class EmbedBuilder:
 
     def __build_pokemon_default_data_text(self, pkmn_data, pkmn_desc):
         """
-        Build default data about specific pokemon.
+        Format default data about specific pokemon.
         """
         genra = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['genera']))
 
@@ -65,6 +81,10 @@ class EmbedBuilder:
 
 
     def __build_abilities_list(self, pkmn_data):
+        """
+        Format list with data about specific 
+        pokemon's abilities.
+        """
         res = []
 
         for ability in pkmn_data['abilities']:
@@ -84,6 +104,42 @@ class EmbedBuilder:
 
         return res
     
+
+    def __build_effectiveness_data(self, weakness):
+        '''
+        Format data about specific pokemon's weakness. 
+
+        If type weakness is hyper un/effective (x4 or 
+        0.25) make type bold.
+
+        Remove last two chars from string to 
+        get rid of unnecessary end "/ ".  
+        '''
+        weaknesses = ''
+        resistances = ''
+        immunities = ''
+
+        for ptype in dir(weakness):
+            if ptype.startswith('_'):
+                continue
+
+            if getattr(weakness, ptype) == 4:
+                weaknesses += f'**{ptype}**, '
+            if getattr(weakness, ptype) == 2:
+                weaknesses += f'{ptype}, '
+            if getattr(weakness, ptype) == 0.5:
+                resistances += f'{ptype}, '
+            if getattr(weakness, ptype) == 0.25:
+                resistances += f'**{ptype}**, '
+            if getattr(weakness, ptype) == 0:
+                immunities += f'{ptype}, '
+            
+        return { 
+            'weaknesses': weaknesses[:-2], 
+            'resistances': resistances[:-2], 
+            'immunities': immunities[:-2] 
+        }
+
 
     class Stats(Enum):
         HP = 'HP'

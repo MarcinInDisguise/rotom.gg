@@ -44,11 +44,13 @@ async def display_weakness(ctx, species):
     """
     pkmn_data = poke_api.get_pokemon_data(species)
     if len(pkmn_data['types']) == 1:
-        weakness_graph = calc.calc_weakness(pkmn_data['types'][0]['type']['name'], None)
+        weakness = calc.calc_weakness(pkmn_data['types'][0]['type']['name'], None)
     else:
-        weakness_graph = calc.calc_weakness(pkmn_data['types'][0]['type']['name'], pkmn_data['types'][1]['type']['name'])
+        weakness = calc.calc_weakness(pkmn_data['types'][0]['type']['name'], pkmn_data['types'][1]['type']['name'])
 
-    print(weakness_graph)
+    embed = builder.type_weakness_message(pkmn_data, weakness)
+
+    await ctx.channel.send(embed=embed)
 
 
 bot.run(os.getenv('DISCORD_TOKEN'))
