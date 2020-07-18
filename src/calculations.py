@@ -95,7 +95,6 @@ class Calculations:
         return int(((((2*base_stat + iv + (ev/4)) * level)/100) + 5) * nature)
 
     
-
     class Stats(Enum):
         HP = 0
         ATTACK = 1

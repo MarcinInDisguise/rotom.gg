@@ -3,12 +3,10 @@ import discord
 from enum import Enum
 
 class EmbedBuilder:
-    BOT_NAME = 'rotom.gg'
-
 
     def __init__(self, config):
         self.config = config       
-
+        self.bot_name = config['rotomgg']['bot_name']
 
     def open_pokeapi(self):
         self.poke_api = pokeapi.PokeAPI(self.config)
@@ -19,7 +17,7 @@ class EmbedBuilder:
         flavor_text = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['flavor_text_entries']))
 
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", url="", description=flavor_text[0]['flavor_text'])
-        embed.set_author(name=self.BOT_NAME, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
         embed.add_field(name='Basic', value=self.__build_pokemon_default_data_text(pkmn_data, pkmn_desc), inline=False)
         embed.add_field(name='Stats', value=self.__build_pokemon_basic_stats_text(pkmn_data), inline=False)
@@ -35,7 +33,7 @@ class EmbedBuilder:
         formated_weakness = self.__build_effectiveness_data(weakness)
 
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description="(ignoring abilities)")
-        embed.set_author(name=self.BOT_NAME, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
         embed.add_field(name='Weaknesses', value=formated_weakness['weaknesses'] or '-', inline=False)
         embed.add_field(name='Resistances', value=formated_weakness['resistances'] or '-', inline=False)
@@ -50,9 +48,10 @@ class EmbedBuilder:
         speed stat in specified level.
         """
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']} lv {level} - {stat_name} stat",  description=f"{stat['min_stat']} - {stat['max_stat']}")
-        embed.set_author(name=self.BOT_NAME, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
 
         return embed
+
 
     def __build_pokemon_basic_stats_text(self, pkmn_data)->str:
         """
