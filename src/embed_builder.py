@@ -49,6 +49,7 @@ class EmbedBuilder:
         """
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']} lv {level} - {stat_name} stat",  description=f"{stat['min_stat']} - {stat['max_stat']}")
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
 
         return embed
 

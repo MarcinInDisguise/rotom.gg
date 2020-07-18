@@ -15,7 +15,7 @@ bot = commands.Bot(command_prefix='!')
 config = yaml.load(open(f'src\\configs\\config.yml', 'r'), Loader=yaml.FullLoader)
 
 poke_api = pokeapi.PokeAPI(config)
-calc = calculations.Calculations(poke_api)
+calc = calculations.Calculations()
 builder = embed_builder.EmbedBuilder(config, poke_api)
 
 @bot.command(name='poke')

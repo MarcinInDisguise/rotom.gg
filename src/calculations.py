@@ -6,11 +6,7 @@ from src import type_weakness
 from enum import Enum
 
 class Calculations:
-
-    def __init__(self, poke_api: pokeapi.PokeAPI):
-        self.poke_api = poke_api
-
-
+    
     def calc_weakness(self, pkmn: dict)->type_weakness:
         """Method for calculating specific pokemon weakness
         based on file pokemon-type-chart.json.
