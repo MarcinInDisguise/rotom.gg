@@ -12,7 +12,7 @@ from src import embed_builder
 load_dotenv()
 bot = commands.Bot(command_prefix='!')
 
-config = yaml.load(open(f'src\\configs\\config.yml', 'r'), Loader=yaml.FullLoader)
+config = yaml.load(open(f'./src/configs/config.yml', 'r'), Loader=yaml.FullLoader)
 
 poke_api = pokeapi.PokeAPI(config)
 calc = calculations.Calculations()
