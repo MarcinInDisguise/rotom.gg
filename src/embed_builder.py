@@ -1,18 +1,18 @@
-import pokeapi
 import discord
+from dotenv import load_dotenv
+from src import pokeapi
+from src import type_weakness
 from enum import Enum
 
 class EmbedBuilder:
 
-    def __init__(self, config):
-        self.config = config       
+    def __init__(self, config: dict, poke_api: pokeapi.PokeAPI):
+        self.config = config
+        self.poke_api = poke_api
         self.bot_name = config['rotomgg']['bot_name']
+        
 
-    def open_pokeapi(self):
-        self.poke_api = pokeapi.PokeAPI(self.config)
-
-
-    def pokemon_message(self, pkmn_data, pkmn_desc)->discord.embeds.Embed:
+    def pokemon_message(self, pkmn_data: dict, pkmn_desc: dict)->discord.embeds.Embed:
         """Build embed message about specific pokemon."""
         flavor_text = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['flavor_text_entries']))
 
@@ -28,7 +28,7 @@ class EmbedBuilder:
         return embed
 
 
-    def type_weakness_message(self, pkmn_data, weakness)->discord.embeds.Embed:
+    def type_weakness_message(self, pkmn_data: dict, weakness: type_weakness.TypeWeakness)->discord.embeds.Embed:
         """Build embed message about specific pokemon's weakness."""
         formated_weakness = self.__build_effectiveness_data(weakness)
 
@@ -42,7 +42,7 @@ class EmbedBuilder:
         return embed
 
 
-    def stat_message(self, pkmn_data, stat, level, stat_name)->discord.embeds.Embed:
+    def stat_message(self, pkmn_data: dict, stat: dict, level: int, stat_name: str)->discord.embeds.Embed:
         """
         Build embed message about specific pokemon's min-max 
         speed stat in specified level.
@@ -53,7 +53,7 @@ class EmbedBuilder:
         return embed
 
 
-    def __build_pokemon_basic_stats_text(self, pkmn_data)->str:
+    def __build_pokemon_basic_stats_text(self, pkmn_data: dict)->str:
         """
         Format default data about base stats 
         of specific pokemon.
@@ -71,7 +71,7 @@ class EmbedBuilder:
         return text[:-2]
 
 
-    def __build_pokemon_default_data_text(self, pkmn_data, pkmn_desc)->str:
+    def __build_pokemon_default_data_text(self, pkmn_data: dict, pkmn_desc: dict)->str:
         """Format default data about specific pokemon."""
         genra = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['genera']))
 
@@ -83,7 +83,7 @@ class EmbedBuilder:
         return f"{genra[0]['genus']} | {type_text} | Height: {pkmn_data['height']/10}m | Weight: {pkmn_data['weight']/10}kg"
 
 
-    def __build_abilities_list(self, pkmn_data)->list:
+    def __build_abilities_list(self, pkmn_data: dict)->list:
         """Format list with data about specific pokemon's abilities."""
         res = []
 
@@ -105,7 +105,7 @@ class EmbedBuilder:
         return res
     
 
-    def __build_effectiveness_data(self, weakness)->dict:
+    def __build_effectiveness_data(self, weakness: type_weakness.TypeWeakness)->dict:
         '''Format data about specific pokemon's weakness. 
 
         If type weakness is hyper un/effective (x4 or 
