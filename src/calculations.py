@@ -18,7 +18,7 @@ class Calculations:
         first_type = pkmn['types'][0]['type']['name']
         second_type = None if len(pkmn['types']) == 1 else pkmn['types'][1]['type']['name']
 
-        with open(f'src\\resources\\pokemon-type-chart.json') as type_chart_file:
+        with open(f'./src/resources/pokemon-type-chart.json') as type_chart_file:
             type_chart = json.load(type_chart_file)
 
             for item in type_chart:

@@ -2,3 +2,7 @@ pyyaml
 discord.py
 python-dotenv
 requests
+pytest
+codecov
+coverage
+pytest-cov
