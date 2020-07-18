@@ -9,7 +9,7 @@ class PokeAPI:
         self.basic_url = config['pokeapi_url']
 
 
-    def get_pokemon_data(self, species):
+    def get_pokemon_data(self, species: str):
         """
         Get api response in json format about specific pokemon 
         by species id or name.
@@ -21,7 +21,7 @@ class PokeAPI:
             return ex
 
     
-    def get_pokemon_description(self, species):
+    def get_pokemon_description(self, species: str):
         """
         Get api response in json format about specific pokemon 
         species by species id or name.
@@ -33,7 +33,7 @@ class PokeAPI:
             return ex
 
 
-    def get_type_weakness(self, ptype):
+    def get_type_weakness(self, ptype: str):
         """
         Get api response in json format about
         all weaknesses of specific type.
@@ -45,7 +45,7 @@ class PokeAPI:
             return ex
        
 
-    def get_pokemon_abilities_from_url(self, url):
+    def get_pokemon_abilities_from_url(self, url: str):
         """
         Get api response in json format about 
         specific ability from api by premade url 

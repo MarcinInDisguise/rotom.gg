@@ -21,12 +21,11 @@ builder.open_pokeapi()
 
 
 @bot.command(name='poke')
-async def display_pokemon(ctx, species):
-    """
-    Return formatted data about the 
+async def display_pokemon(ctx, species: str):
+    """Send formatted data about the 
     called pokemon by user. 
     
-    @call: !poke {id or name}
+    call: !poke {id or name}
     """
     pkmn_data = poke_api.get_pokemon_data(species)
     pkmn_desc = poke_api.get_pokemon_description(species)
@@ -37,20 +36,34 @@ async def display_pokemon(ctx, species):
 
 
 @bot.command(name="weak")
-async def display_weakness(ctx, species):
-    """
-    Return formated data about the called
+async def display_weakness(ctx, species: str):
+    """Send formated data about the called
     pokemon weakness.
+
+    call: !weak {name}
     """
     pkmn_data = poke_api.get_pokemon_data(species)
-    if len(pkmn_data['types']) == 1:
-        weakness = calc.calc_weakness(pkmn_data['types'][0]['type']['name'], None)
-    else:
-        weakness = calc.calc_weakness(pkmn_data['types'][0]['type']['name'], pkmn_data['types'][1]['type']['name'])
-
+    weakness = calc.calc_weakness(pkmn_data)
     embed = builder.type_weakness_message(pkmn_data, weakness)
 
     await ctx.channel.send(embed=embed)
 
 
+@bot.command(name="speed")
+async def display_speed(ctx, species: str, level: int = 50):
+    """Send formated data about the 
+    pokemon min-max speed stat based 
+    on specified level.
+
+    call: !speed {pokemon} {level}
+    call: !speed {pokemon}
+    """
+    pkmn_data = poke_api.get_pokemon_data(species)
+    speed_stat = calc.get_speed_stat_for_level(pkmn_data, level)
+    embed = builder.stat_message(pkmn_data, speed_stat, level, 'speed')
+
+    await ctx.channel.send(embed=embed)
+
+
 bot.run(os.getenv('DISCORD_TOKEN'))
+
