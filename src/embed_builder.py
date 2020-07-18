@@ -1,25 +1,23 @@
-import pokeapi
 import discord
+from dotenv import load_dotenv
+from src import pokeapi
+from src import type_weakness
 from enum import Enum
 
 class EmbedBuilder:
-    BOT_NAME = 'rotom.gg'
 
+    def __init__(self, config: dict, poke_api: pokeapi.PokeAPI):
+        self.config = config
+        self.poke_api = poke_api
+        self.bot_name = config['rotomgg']['bot_name']
+        
 
-    def __init__(self, config):
-        self.config = config       
-
-
-    def open_pokeapi(self):
-        self.poke_api = pokeapi.PokeAPI(self.config)
-
-
-    def pokemon_message(self, pkmn_data, pkmn_desc)->discord.embeds.Embed:
+    def pokemon_message(self, pkmn_data: dict, pkmn_desc: dict)->discord.embeds.Embed:
         """Build embed message about specific pokemon."""
         flavor_text = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['flavor_text_entries']))
 
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", url="", description=flavor_text[0]['flavor_text'])
-        embed.set_author(name=self.BOT_NAME, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
         embed.add_field(name='Basic', value=self.__build_pokemon_default_data_text(pkmn_data, pkmn_desc), inline=False)
         embed.add_field(name='Stats', value=self.__build_pokemon_basic_stats_text(pkmn_data), inline=False)
@@ -30,12 +28,12 @@ class EmbedBuilder:
         return embed
 
 
-    def type_weakness_message(self, pkmn_data, weakness)->discord.embeds.Embed:
+    def type_weakness_message(self, pkmn_data: dict, weakness: type_weakness.TypeWeakness)->discord.embeds.Embed:
         """Build embed message about specific pokemon's weakness."""
         formated_weakness = self.__build_effectiveness_data(weakness)
 
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description="(ignoring abilities)")
-        embed.set_author(name=self.BOT_NAME, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
         embed.add_field(name='Weaknesses', value=formated_weakness['weaknesses'] or '-', inline=False)
         embed.add_field(name='Resistances', value=formated_weakness['resistances'] or '-', inline=False)
@@ -44,17 +42,19 @@ class EmbedBuilder:
         return embed
 
 
-    def stat_message(self, pkmn_data, stat, level, stat_name)->discord.embeds.Embed:
+    def stat_message(self, pkmn_data: dict, stat: dict, level: int, stat_name: str)->discord.embeds.Embed:
         """
         Build embed message about specific pokemon's min-max 
         speed stat in specified level.
         """
         embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']} lv {level} - {stat_name} stat",  description=f"{stat['min_stat']} - {stat['max_stat']}")
-        embed.set_author(name=self.BOT_NAME, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
 
         return embed
 
-    def __build_pokemon_basic_stats_text(self, pkmn_data)->str:
+
+    def __build_pokemon_basic_stats_text(self, pkmn_data: dict)->str:
         """
         Format default data about base stats 
         of specific pokemon.
@@ -72,7 +72,7 @@ class EmbedBuilder:
         return text[:-2]
 
 
-    def __build_pokemon_default_data_text(self, pkmn_data, pkmn_desc)->str:
+    def __build_pokemon_default_data_text(self, pkmn_data: dict, pkmn_desc: dict)->str:
         """Format default data about specific pokemon."""
         genra = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['genera']))
 
@@ -84,7 +84,7 @@ class EmbedBuilder:
         return f"{genra[0]['genus']} | {type_text} | Height: {pkmn_data['height']/10}m | Weight: {pkmn_data['weight']/10}kg"
 
 
-    def __build_abilities_list(self, pkmn_data)->list:
+    def __build_abilities_list(self, pkmn_data: dict)->list:
         """Format list with data about specific pokemon's abilities."""
         res = []
 
@@ -106,7 +106,7 @@ class EmbedBuilder:
         return res
     
 
-    def __build_effectiveness_data(self, weakness)->dict:
+    def __build_effectiveness_data(self, weakness: type_weakness.TypeWeakness)->dict:
         '''Format data about specific pokemon's weakness. 
 
         If type weakness is hyper un/effective (x4 or 

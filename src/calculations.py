@@ -1,15 +1,12 @@
-import pokeapi
-import type_weakness
 import json
 import math
+from dotenv import load_dotenv
+from src import pokeapi
+from src import type_weakness
 from enum import Enum
 
 class Calculations:
-
-    def __init__(self, poke_api):
-        self.poke_api = poke_api
-
-
+    
     def calc_weakness(self, pkmn: dict)->type_weakness:
         """Method for calculating specific pokemon weakness
         based on file pokemon-type-chart.json.
@@ -92,10 +89,12 @@ class Calculations:
 
     def __normal_stat_formula(self, base_stat: int, iv: int, ev: int, nature: float, level: int)->int:
         """Math formula of normal stat (Atk, Def, SpA, SpD, Spe)."""
-        return int(((((2*base_stat + iv + (ev/4)) * level)/100) + 5) * nature)
+        if level in range (1, 101):
+            return int(((((2*base_stat + iv + int((ev/4))) * level)/100) + 5) * nature)
+        else:
+            raise ValueError(f"Level {level} is not in range 1 - 100")
 
     
-
     class Stats(Enum):
         HP = 0
         ATTACK = 1
