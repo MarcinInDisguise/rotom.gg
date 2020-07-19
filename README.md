@@ -23,10 +23,11 @@ https://discord.com/api/oauth2/authorize?client_id=733002946752807084&permission
 
 # Development 
 
-## Technologies
-Project is created with:
-* python >= 3.x
-* discord.py
+## Requirements
+* python>=3.6
+* python3-pip
+* git
+
 
 ## Continuous Integration & Continuous Delivery
 * travis
