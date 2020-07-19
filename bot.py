@@ -27,8 +27,15 @@ async def display_pokemon(ctx, species: str):
     """
     pkmn_data = poke_api.get_pokemon_data(species)
     pkmn_desc = poke_api.get_pokemon_description(species)
-
     embed = builder.pokemon_message(pkmn_data, pkmn_desc)
+
+    await ctx.channel.send(embed=embed)
+
+
+@bot.command(name="ability")
+async def display_ability(ctx, ability: str):
+    ability_data = poke_api.get_ability_data(ability)
+    embed = builder.ability_message(ability_data)
 
     await ctx.channel.send(embed=embed)
 
