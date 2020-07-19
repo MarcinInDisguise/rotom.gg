@@ -28,10 +28,8 @@ https://discord.com/api/oauth2/authorize?client_id=733002946752807084&permission
 * python3-pip
 * git
 
-
-## Continuous Integration & Continuous Delivery
+## CI/CD
 * travis
-* codecov
 * heroku
 
 ## Installation
