@@ -16,7 +16,7 @@ class EmbedBuilder:
         """Build embed message about specific pokemon."""
         flavor_text = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['flavor_text_entries']))
 
-        embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", url="", description=flavor_text[0]['flavor_text'])
+        embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description=flavor_text[0]['flavor_text'])
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
         embed.add_field(name='Basic', value=self.__build_pokemon_default_data_text(pkmn_data, pkmn_desc), inline=False)
@@ -24,6 +24,17 @@ class EmbedBuilder:
 
         for ability in self.__build_abilities_list(pkmn_data):
             embed.add_field(name=ability['name'], value=ability['effect'], inline=False)
+
+        return embed
+
+
+    def ability_message(self, ability_data: dict)->discord.embeds.Embed:
+        """Build embed message about specific ability."""
+        effect_data = list(filter(lambda x:x['language']['name']=='en', ability_data['effect_entries']))
+
+        embed=discord.Embed(title=f"{ability_data['name']}", description=effect_data[0]['effect'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
+        embed.add_field(name='Pokemons', value=self.__build_abilities_owners_text(ability_data), inline=False)
 
         return embed
 
@@ -43,11 +54,11 @@ class EmbedBuilder:
 
 
     def stat_message(self, pkmn_data: dict, stat: dict, level: int, stat_name: str)->discord.embeds.Embed:
-        """
-        Build embed message about specific pokemon's min-max 
-        speed stat in specified level.
-        """
-        embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']} lv {level} - {stat_name} stat",  description=f"{stat['min_stat']} - {stat['max_stat']}")
+        """Build embed message about specific pokemon's min-max speed stat in specified level."""
+        embed=discord.Embed(
+            title=f"#{pkmn_data['id']} {pkmn_data['species']['name']} lv {level} - {stat_name} stat",  
+            description=f"{stat['min_stat']} - {stat['max_stat']}"
+            )
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
 
@@ -55,8 +66,7 @@ class EmbedBuilder:
 
 
     def __build_pokemon_basic_stats_text(self, pkmn_data: dict)->str:
-        """
-        Format default data about base stats 
+        """Format default data about base stats 
         of specific pokemon.
 
         Remove last two chars from string to 
@@ -105,6 +115,15 @@ class EmbedBuilder:
 
         return res
     
+
+    def __build_abilities_owners_text(self, ability_data: dict)->str:
+        """Format data about owners (pokemons) of specific ability. Pokemon name is bold when ability is HA."""
+        text = ''
+        for pokemon in ability_data['pokemon']:       
+            text += f"**{pokemon['pokemon']['name']}**\n" if pokemon['is_hidden'] else f"{pokemon['pokemon']['name']}\n"
+
+        return text[:-2]
+
 
     def __build_effectiveness_data(self, weakness: type_weakness.TypeWeakness)->dict:
         '''Format data about specific pokemon's weakness. 
