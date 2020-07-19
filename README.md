@@ -8,8 +8,8 @@ To add rotom.gg to your discord server just follow this link:
 https://discord.com/api/oauth2/authorize?client_id=733002946752807084&permissions=84992&scope=bot
 ```
 
-
 ## Commands
+
 | Command                                                          | Description                                   | Examples           |
 | ----------------------------------------------------------------:|:---------------------------------------------:| ------------------:|
 | !poke [_pokemon_ or _id_]                            | Detailed info about a Pokemon                 | !poke magikarp     |
@@ -17,6 +17,9 @@ https://discord.com/api/oauth2/authorize?client_id=733002946752807084&permission
 | !weak [_pokemon_ or _id_]                            | Detailed info about a Pokemon's weaknesses    | !weak magikarp     |
 | !speed [_pokemon_  or _id_] [_level_ or _nothing_]   | Shows pokemon's speed stat in specified level | !speed magikarp    |
 
+
+## Screenshots
+<img src="https://i.imgur.com/DtacKME.png">
 
 # Development 
 
