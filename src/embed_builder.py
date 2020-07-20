@@ -13,10 +13,10 @@ class EmbedBuilder:
         
 
     def pokemon_message(self, pkmn_data: dict, pkmn_desc: dict)->discord.embeds.Embed:
-        """Build embed message about specific pokemon."""
+        """Build embed message about specified pokemon."""
         flavor_text = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['flavor_text_entries']))
 
-        embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description=flavor_text[0]['flavor_text'])
+        embed = discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description=flavor_text[0]['flavor_text'])
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
         embed.add_field(name='Basic', value=self.__build_pokemon_default_data_text(pkmn_data, pkmn_desc), inline=False)
@@ -29,21 +29,32 @@ class EmbedBuilder:
 
 
     def ability_message(self, ability_data: dict)->discord.embeds.Embed:
-        """Build embed message about specific ability."""
+        """Build embed message about specified ability."""
         effect_data = list(filter(lambda x:x['language']['name']=='en', ability_data['effect_entries']))
 
-        embed=discord.Embed(title=f"{ability_data['name']}", description=effect_data[0]['effect'])
+        embed = discord.Embed(title=f"{ability_data['name']}", description=effect_data[0]['effect'])
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.add_field(name='Pokemons', value=self.__build_abilities_owners_text(ability_data), inline=False)
 
         return embed
 
 
+    def item_message(self, item_data: dict)->discord.embeds.Embed:
+        """Build embed message about specified item"""
+        effect_data = list(filter(lambda x:x['language']['name']=='en', item_data['effect_entries']))
+
+        embed = discord.Embed(title=f"{item_data['name']}", description=effect_data[0]['effect'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_thumbnail(url=item_data['sprites']['default'])
+
+        return embed
+
+
     def type_weakness_message(self, pkmn_data: dict, weakness: type_weakness.TypeWeakness)->discord.embeds.Embed:
-        """Build embed message about specific pokemon's weakness."""
+        """Build embed message about specified pokemon's weakness."""
         formated_weakness = self.__build_effectiveness_data(weakness)
 
-        embed=discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description="(ignoring abilities)")
+        embed = discord.Embed(title=f"#{pkmn_data['id']} {pkmn_data['species']['name']}", description="(ignoring abilities)")
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
         embed.set_thumbnail(url=pkmn_data['sprites']['front_default'])
         embed.add_field(name='Weaknesses', value=formated_weakness['weaknesses'] or '-', inline=False)
@@ -54,8 +65,8 @@ class EmbedBuilder:
 
 
     def stat_message(self, pkmn_data: dict, stat: dict, level: int, stat_name: str)->discord.embeds.Embed:
-        """Build embed message about specific pokemon's min-max speed stat in specified level."""
-        embed=discord.Embed(
+        """Build embed message about specified pokemon's min-max speed stat in specified level."""
+        embed = discord.Embed(
             title=f"#{pkmn_data['id']} {pkmn_data['species']['name']} lv {level} - {stat_name} stat",  
             description=f"{stat['min_stat']} - {stat['max_stat']}"
             )
@@ -66,11 +77,9 @@ class EmbedBuilder:
 
 
     def __build_pokemon_basic_stats_text(self, pkmn_data: dict)->str:
-        """Format default data about base stats 
-        of specific pokemon.
+        """Format default data about base stats of specified pokemon.
 
-        Remove last two chars from string to 
-        get rid of unnecessary end "/ ".  
+        Remove last two chars from string to get rid of unnecessary end "/ ".  
         """
         pkmn_stats = pkmn_data['stats']
         counter, text = 0, ''
@@ -83,7 +92,7 @@ class EmbedBuilder:
 
 
     def __build_pokemon_default_data_text(self, pkmn_data: dict, pkmn_desc: dict)->str:
-        """Format default data about specific pokemon."""
+        """Format default data about specified pokemon."""
         genra = list(filter(lambda x:x['language']['name']=='en', pkmn_desc['genera']))
 
         if len(pkmn_data['types']) == 2:
@@ -95,11 +104,11 @@ class EmbedBuilder:
 
 
     def __build_abilities_list(self, pkmn_data: dict)->list:
-        """Format list with data about specific pokemon's abilities."""
+        """Format list with data about specified pokemon's abilities."""
         res = []
 
         for ability in pkmn_data['abilities']:
-            ability_precisely_data = self.poke_api.get_pokemon_abilities_from_url(ability['ability']['url'])
+            ability_precisely_data = self.poke_api.get_data_from_url(ability['ability']['url'])
             effect_entries = list(filter(lambda x:x['language']['name']=='en', ability_precisely_data['effect_entries']))
             if ability['is_hidden']:
                 ability_type = 'hidden ability'
@@ -117,7 +126,7 @@ class EmbedBuilder:
     
 
     def __build_abilities_owners_text(self, ability_data: dict)->str:
-        """Format data about owners (pokemons) of specific ability. Pokemon name is bold when ability is HA."""
+        """Format data about owners (pokemons) of specified ability. Pokemon name is bold when ability is HA."""
         text = ''
         for pokemon in ability_data['pokemon']:       
             text += f"**{pokemon['pokemon']['name']}**\n" if pokemon['is_hidden'] else f"{pokemon['pokemon']['name']}\n"
@@ -126,17 +135,13 @@ class EmbedBuilder:
 
 
     def __build_effectiveness_data(self, weakness: type_weakness.TypeWeakness)->dict:
-        '''Format data about specific pokemon's weakness. 
+        """Format data about specified pokemon's weakness. 
 
-        If type weakness is hyper un/effective (x4 or 
-        0.25) make type bold.
+        If type weakness is hyper un/effective (x4 or 0.25) make type bold.
 
-        Remove last two chars from string to 
-        get rid of unnecessary end ", ".  
-        '''
-        weaknesses = ''
-        resistances = ''
-        immunities = ''
+        Remove last two chars from string to get rid of unnecessary end ", ".  
+        """
+        weaknesses, resistances, immunities = ''
 
         for ptype in dir(weakness):
             if ptype.startswith('_'):

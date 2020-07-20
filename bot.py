@@ -19,11 +19,10 @@ calc = calculations.Calculations()
 builder = embed_builder.EmbedBuilder(config, poke_api)
 
 @bot.command(name='poke')
-async def display_pokemon(ctx, species: str):
-    """Send formatted data about the 
-    called pokemon by user. 
+async def display_pokemon(ctx, species):
+    """Send formatted data about the called pokemon by user. 
     
-    call: !poke {id or name}
+    command: !poke {id or name}
     """
     pkmn_data = poke_api.get_pokemon_data(species)
     pkmn_desc = poke_api.get_pokemon_description(species)
@@ -33,19 +32,34 @@ async def display_pokemon(ctx, species: str):
 
 
 @bot.command(name="ability")
-async def display_ability(ctx, ability: str):
+async def display_ability(ctx, ability):
+    """Send formatted data about the called ability by user
+
+    command: !ability {id or name}
+    """
     ability_data = poke_api.get_ability_data(ability)
     embed = builder.ability_message(ability_data)
 
     await ctx.channel.send(embed=embed)
 
 
+@bot.command(name="item")
+async def display_item(ctx, item):
+    """Send formatted data about the called item by user
+
+    command: !item {id or name}
+    """
+    item_data = poke_api.get_item_data(item)
+    embed = builder.item_message(item_data)
+
+    await ctx.channel.send(embed=embed)
+
+
 @bot.command(name="weak")
 async def display_weakness(ctx, species: str):
-    """Send formated data about the called
-    pokemon weakness.
+    """Send formated data about the called pokemon weakness.
 
-    call: !weak {name}
+    command: !weak {name}
     """
     pkmn_data = poke_api.get_pokemon_data(species)
     weakness = calc.calc_weakness(pkmn_data)
@@ -56,12 +70,11 @@ async def display_weakness(ctx, species: str):
 
 @bot.command(name="speed")
 async def display_speed(ctx, species: str, level: int = 50):
-    """Send formated data about the 
-    pokemon min-max speed stat based 
-    on specified level.
+    """Send formated data about the pokemon min-max speed stat based 
+    on specified level. Default pokemon level is set to 50 - it is the 
+    most popular format in competitive.
 
-    call: !speed {pokemon} {level}
-    call: !speed {pokemon}
+    command: !speed {pokemon} <level>
     """
     try:
         pkmn_data = poke_api.get_pokemon_data(species)
