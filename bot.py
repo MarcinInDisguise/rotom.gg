@@ -19,7 +19,7 @@ calc = calculations.Calculations()
 builder = embed_builder.EmbedBuilder(config, poke_api)
 
 @bot.command(name='poke')
-async def display_pokemon(ctx, species):
+async def pokemon_command(ctx, species):
     """Send formatted data about the called pokemon by user. 
     
     command: !poke {id or name}
@@ -32,7 +32,7 @@ async def display_pokemon(ctx, species):
 
 
 @bot.command(name="ability")
-async def display_ability(ctx, ability):
+async def ability_command(ctx, ability):
     """Send formatted data about the called ability by user
 
     command: !ability {id or name}
@@ -44,7 +44,7 @@ async def display_ability(ctx, ability):
 
 
 @bot.command(name="item")
-async def display_item(ctx, item):
+async def item_command(ctx, item):
     """Send formatted data about the called item by user
 
     command: !item {id or name}
@@ -55,8 +55,20 @@ async def display_item(ctx, item):
     await ctx.channel.send(embed=embed)
 
 
+@bot.command(name="move")
+async def move_command(ctx, move):
+    """Send formatted data about the called move by user
+
+    command: !move {id or name}
+    """
+    move_data = poke_api.get_move_data(move)
+    embed = builder.move_message(move_data)
+
+
+
+
 @bot.command(name="weak")
-async def display_weakness(ctx, species: str):
+async def weakness_command(ctx, species: str):
     """Send formated data about the called pokemon weakness.
 
     command: !weak {name}
@@ -69,7 +81,7 @@ async def display_weakness(ctx, species: str):
 
 
 @bot.command(name="speed")
-async def display_speed(ctx, species: str, level: int = 50):
+async def speed_command(ctx, species: str, level: int = 50):
     """Send formated data about the pokemon min-max speed stat based 
     on specified level. Default pokemon level is set to 50 - it is the 
     most popular format in competitive.
