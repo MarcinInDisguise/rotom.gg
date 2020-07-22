@@ -64,7 +64,7 @@ async def move_command(ctx, move):
     move_data = poke_api.get_move_data(move)
     embed = builder.move_message(move_data)
 
-
+    await ctx.channel.send(embed=embed)
 
 
 @bot.command(name="weak")

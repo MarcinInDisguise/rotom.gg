@@ -55,7 +55,6 @@ class EmbedBuilder:
         effect_data = list(filter(lambda x:x['language']['name']=='en', move_data['effect_entries']))
         embed = discord.Embed(title=f"{move_data['name']} | Power: {move_data['power']} | PP: {move_data['pp']} | {move_data['damage_class']['name']}", description=effect_data[0]['effect'])
         embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
-        embed.set_thumbnail(url=move_data['sprites']['default'])
 
         return embed
 
