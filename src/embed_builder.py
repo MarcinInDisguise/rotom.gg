@@ -50,6 +50,15 @@ class EmbedBuilder:
         return embed
 
 
+    def move_message(self, move_data: dict)->discord.embeds.Embed:
+        """Build embed message about specified move"""
+        effect_data = list(filter(lambda x:x['language']['name']=='en', move_data['effect_entries']))
+        embed = discord.Embed(title=f"{move_data['name']} | Power: {move_data['power']} | PP: {move_data['pp']} | {move_data['damage_class']['name']}", description=effect_data[0]['effect'])
+        embed.set_author(name=self.bot_name, icon_url=self.config['rotomgg']['icon_url'])
+        embed.set_thumbnail(url=move_data['sprites']['default'])
+
+        return embed
+
     def type_weakness_message(self, pkmn_data: dict, weakness: type_weakness.TypeWeakness)->discord.embeds.Embed:
         """Build embed message about specified pokemon's weakness."""
         formated_weakness = self.__build_effectiveness_data(weakness)

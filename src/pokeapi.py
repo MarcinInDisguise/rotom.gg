@@ -28,6 +28,11 @@ class PokeAPI:
         return self.__build_api_request('item', item)
 
 
+    def get_move_data(self, move):
+        """Get api reposone in json format about specified move by id or name"""
+        return self.__build_api_request('move', move)
+
+
     def get_type_weakness(self, ptype: str):
         """Get api response in json format about all weaknesses of specific type."""
         return self.__build_api_request('type', ptype)
