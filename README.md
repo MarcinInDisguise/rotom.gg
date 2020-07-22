@@ -10,11 +10,12 @@ https://discord.com/api/oauth2/authorize?client_id=733002946752807084&permission
 
 ## Commands
 
-| Command                                              | Description                                   | Examples           |
+| Command                                              | Description                                   | Example            |
 | ----------------------------------------------------:|:---------------------------------------------:| ------------------:|
 | !poke [_pokemon_ or _id_]                            | Detailed info about a Pokemon                 | !poke magikarp     |
 | !ability [ability or _id_]                           | Detailed info about an ability                | !ability blaze     |
 | !item [item or _id_]                                 | Detailed info about an item                   | !item leftovers    |
+| !move [item or _id_]                                 | Detailed info about a move                    | !move thunderbolt  |
 | !weak [_pokemon_ or _id_]                            | Detailed info about a Pokemon's weaknesses    | !weak magikarp     |
 | !speed [_pokemon_  or _id_] [_level_ or _nothing_]   | Shows pokemon's speed stat in specified level | !speed magikarp    |
 
