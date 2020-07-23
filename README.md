@@ -28,7 +28,6 @@ https://discord.com/api/oauth2/authorize?client_id=733002946752807084&permission
 ## Requirements
 * python>=3.6
 * python3-pip
-* git
 
 ## CI/CD
 * travis
