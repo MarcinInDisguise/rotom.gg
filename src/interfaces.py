@@ -1,6 +1,9 @@
+from discord.ext import commands, tasks
 import yaml
 import requests
 import pathlib
+import dbl
+import asyncio
 
 class PokeAPI:
 
@@ -54,3 +57,22 @@ class PokeAPI:
             return ex
 
 
+class TopGG(commands.Cog):
+    """Handles interactions with the top.gg API"""
+    
+    def __init__(self, bot, token):
+        self.dblpy = dbl.DBLClient(bot, token)
+        self.update_stats.start()
+
+
+    def cog_unload(self):
+        self.update_stats.cancel() 
+
+
+    @tasks.loop(minutes=30.0)
+    async def update_stats(self):
+        """This function runs every 30 minutes to automatically update your server count"""
+        try:
+            await self.dblpy.post_guild_count()
+        except:
+            pass

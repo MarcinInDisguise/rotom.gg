@@ -1,7 +1,6 @@
 import json
 import math
 from dotenv import load_dotenv
-from src import pokeapi
 from src import type_weakness
 from enum import Enum
 

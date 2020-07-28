@@ -1,12 +1,12 @@
 import discord
 from dotenv import load_dotenv
-from src import pokeapi
+from src import interfaces
 from src import type_weakness
 from enum import Enum
 
 class EmbedBuilder:
 
-    def __init__(self, config: dict, poke_api: pokeapi.PokeAPI):
+    def __init__(self, config: dict, poke_api: interfaces.PokeAPI):
         self.config = config
         self.poke_api = poke_api
         self.bot_name = config['rotomgg']['bot_name']

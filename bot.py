@@ -5,8 +5,8 @@ import yaml
 from discord.ext import commands
 from dotenv import load_dotenv
 
+from src import interfaces
 from src import calculations
-from src import pokeapi
 from src import embed_builder
 
 load_dotenv()
@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix='!')
 
 config = yaml.load(open(f'./src/configs/config.yml', 'r'), Loader=yaml.FullLoader)
 
-poke_api = pokeapi.PokeAPI(config)
+poke_api = interfaces.PokeAPI(config)
 calc = calculations.Calculations()
 builder = embed_builder.EmbedBuilder(config, poke_api)
 
@@ -99,4 +99,4 @@ async def speed_command(ctx, species: str, level: int = 50):
 
 
 bot.run(os.getenv('DISCORD_TOKEN'))
-
+bot.add_cog(interfaces.TopGG(bot))
