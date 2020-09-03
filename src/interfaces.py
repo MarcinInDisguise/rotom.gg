@@ -6,6 +6,7 @@ import dbl
 import asyncio
 
 class PokeAPI:
+    """Handles interactions with the pokeapi.co API"""
 
     def __init__(self, config):
         self.config = config
@@ -76,3 +77,4 @@ class TopGG(commands.Cog):
             await self.dblpy.post_guild_count()
         except:
             pass
+        await asyncio.sleep(1800)
