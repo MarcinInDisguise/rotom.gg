@@ -4,10 +4,10 @@ import discord
 import yaml
 from discord.ext import commands
 from dotenv import load_dotenv
-
 from src import interfaces
 from src import calculations
 from src import embed_builder
+from src import mapper
 
 load_dotenv()
 bot = commands.Bot(command_prefix='!')
@@ -17,6 +17,8 @@ config = yaml.load(open(f'./src/configs/config.yml', 'r'), Loader=yaml.FullLoade
 poke_api = interfaces.PokeAPI(config)
 calc = calculations.Calculations()
 builder = embed_builder.EmbedBuilder(config, poke_api)
+name_mapper = mapper.NameMapper(config)
+
 
 @bot.command(name='poke')
 async def pokemon_command(ctx, species):
@@ -24,8 +26,9 @@ async def pokemon_command(ctx, species):
     
     command: !poke {id or name}
     """
-    pkmn_data = poke_api.get_pokemon_data(species)
-    pkmn_desc = poke_api.get_pokemon_description(species)
+    formatted_species_name = name_mapper.map_pokemon_name(species)
+    pkmn_data = poke_api.get_pokemon_data(formatted_species_name)
+    pkmn_desc = poke_api.get_pokemon_description(formatted_species_name)
     embed = builder.pokemon_message(pkmn_data, pkmn_desc)
 
     await ctx.channel.send(embed=embed)
@@ -73,7 +76,8 @@ async def weakness_command(ctx, species: str):
 
     command: !weak {name}
     """
-    pkmn_data = poke_api.get_pokemon_data(species)
+    formatted_species_name = name_mapper.map_pokemon_name(species)
+    pkmn_data = poke_api.get_pokemon_data(formatted_species_name)
     weakness = calc.calc_weakness(pkmn_data)
     embed = builder.type_weakness_message(pkmn_data, weakness)
 
@@ -89,7 +93,8 @@ async def speed_command(ctx, species: str, level: int = 50):
     command: !speed {pokemon} <level>
     """
     try:
-        pkmn_data = poke_api.get_pokemon_data(species)
+        formatted_species_name = name_mapper.map_pokemon_name(species)
+        pkmn_data = poke_api.get_pokemon_data(formatted_species_name)
         speed_stat = calc.get_speed_stat_for_level(pkmn_data, level)
         embed = builder.stat_message(pkmn_data, speed_stat, level, 'speed')
 
