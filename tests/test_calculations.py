@@ -5,11 +5,13 @@ import src.calculations
 import src.type_weakness
 from unittest import TestCase
 
-class Test_Calculations(unittest.TestCase): 
+class Test_Calculations(unittest.TestCase):
+    """Unit tests for Calculations methods"""
+
     calc = src.calculations.Calculations()
 
     def test_calc_weakness(self):
-        #check when pokemon has 2 types
+        # check when pokemon has 2 types
         with open('./tests/support/pokemon_139.json') as f:
             data = json.load(f)
             result_weaknesses = self.calc.calc_weakness(data)
@@ -26,7 +28,7 @@ class Test_Calculations(unittest.TestCase):
             
             self.assertEqual(vars(expected_weaknesses), vars(result_weaknesses))
 
-        #check when pokemon has 1 typee
+        # check when pokemon has 1 typee
         with open('./tests/support/pokemon_025.json') as f:
             data = json.load(f)
             result_weaknesses = self.calc.calc_weakness(data)
