@@ -40,32 +40,6 @@ Start with cloning repository
 git clone https://github.com/RirisuV/rotom.gg.git
 ```
 
-I highly recommend to create virtual environment (but still, you can skip that)
-On macOS and Linux:
-```
-python3 -m venv env
-```
-On Windows:
-```
-py -m venv env
-```
-Don't forget to activate it with command below
-```
-.\env\Scripts\activate
-```
-You can confirm you’re in the virtual environment by checking the location of your Python interpreter, it should point to the env directory.
-
-On macOS and Linux:
-```
-which python
-.../env/bin/python
-```
-On Windows:
-```
-where python
-.../env/bin/python.exe
-```
-
 Configuration is loaded from .env file located in root directory. Create it and paste your discord token of your bot.
 ```
 DISCORD_TOKEN={your token goes here}
