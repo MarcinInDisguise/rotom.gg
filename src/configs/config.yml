@@ -2,4 +2,6 @@ rotomgg:
   icon_url: 'https://i.imgur.com/qxnOpVb.jpg'
   bot_name: 'rotom.gg'
 
-pokeapi_url: 'https://pokeapi.co/api/v2/'
+api:
+  pokeapi_url: 'https://pokeapi.co/api/v2'
+  smogon_usg_stat_api_url: 'https://smogon-usage-stats.herokuapp.com'
