@@ -51,9 +51,29 @@ class PokeAPI:
 
 
     def __build_api_request(self, endpoint, arg):
-        """ Send request to pokeapi with specified endpoint and arg"""
+        """Send request to pokeapi with specified endpoint and arg"""
         try:
-            return requests.get(f"{self.config['pokeapi_url']}/{endpoint}/{arg}").json()
+            return requests.get(f"{self.config['api']['pokeapi_url']}/{endpoint}/{arg}").json()
+        except Exception as ex:
+            return ex
+
+
+class SmogonUsageStats:
+    """Handles interactions with the https://smogon-usage-stats.herokuapp.com. Right now it support only Gen 8 OU format"""
+
+    def __init__(self, config):
+        self.config = config
+
+
+    def get_pokemon_stats(self, pokemon, smogon_format = 'gen8ou'):
+        """Get api response in json format about specified pokemon smogon's usage stats by species name."""
+        return self.__build_api_request(pokemon, smogon_format)
+
+
+    def __build_api_request(self, endpoint, arg):
+        """Send request to smogon usage stats api with specified endpoint and arg"""
+        try:
+            return requests.get(f"{self.config['api']['smogon_usg_stat_api_url']}/{endpoint}/{arg}").json()
         except Exception as ex:
             return ex
 
