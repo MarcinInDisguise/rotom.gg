@@ -18,6 +18,7 @@ class Test_PokeApi(unittest.TestCase):
 
 
     def test_get_ability_data(self):
+        """Get api reposone in json format about specified ability by id or name"""
         obj_name = 'blaze'
         res = self.poke_api.get_ability_data(obj_name)
         self.assertEqual(res['name'], obj_name)
