@@ -1,4 +1,4 @@
-# rotom.gg [![Build Status](https://travis-ci.com/RirisuV/rotom.gg.svg?branch=master)](https://travis-ci.com/RirisuV/rotom.gg) [![codecov](https://codecov.io/gh/RirisuV/rotom.gg/branch/master/graph/badge.svg)](https://codecov.io/gh/RirisuV/rotom.gg) ![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
+# rotom.gg [![Build Status](https://travis-ci.com/RirisuV/rotom.gg.svg?branch=master)](https://travis-ci.com/RirisuV/rotom.gg) [![codecov](https://codecov.io/gh/RirisuV/rotom.gg/branch/origin/master/graph/badge.svg)](https://codecov.io/gh/RirisuV/rotom.gg) ![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
 <img align="left" width="100" height="100" src="https://i.imgur.com/qxnOpVb.jpg">Use the rotom.gg to explore pokémon by type, weakness, ability, and more! Rotom.gg is a Discord bot  designed to support competitive players with metagame informations. Check out the list of commands below!
 
 
