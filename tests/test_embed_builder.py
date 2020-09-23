@@ -32,3 +32,12 @@ class Test_EmbedBuilder(unittest.TestCase):
             self.assertEqual(embed_result.to_dict(), expected_result)
 
     
+    def test_item_message(self):
+        with open('./tests/data/item_leftovers.json', encoding="utf8") as item_file:
+            item_data = json.load(item_file)
+            expected_result = {'thumbnail': {'url': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/leftovers.png'}, 'author': {'name': 'rotom.gg',
+                'icon_url': 'https://i.imgur.com/qxnOpVb.jpg'}, 'type': 'rich', 'description': 'Held: Heals the holder by 1/16 its max HP at the end of each turn.', 'title': 'leftovers'}
+            embed_result = self.embed_builder.item_message(item_data)
+            self.assertEqual(embed_result.to_dict(), expected_result)
+
+
