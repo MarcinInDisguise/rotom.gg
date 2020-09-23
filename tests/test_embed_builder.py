@@ -41,3 +41,10 @@ class Test_EmbedBuilder(unittest.TestCase):
             self.assertEqual(embed_result.to_dict(), expected_result)
 
 
+    def test_move_message(self):
+        with open('./tests/data/move_tackle.json', encoding="utf8") as move_file:
+            move_data = json.load(move_file)
+            expected_result = {'author': {'name': 'rotom.gg', 'icon_url': 'https://i.imgur.com/qxnOpVb.jpg'},
+                               'type': 'rich', 'description': 'Inflicts regular damage.', 'title': 'tackle | Power: 40 | PP: 35 | physical'}
+            embed_result = self.embed_builder.move_message(move_data)
+            self.assertEqual(embed_result.to_dict(), expected_result)
