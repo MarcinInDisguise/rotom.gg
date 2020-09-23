@@ -12,7 +12,7 @@ class Test_Calculations(unittest.TestCase):
 
     def test_calc_weakness(self):
         # check when pokemon has 2 types
-        with open('./tests/support/pokemon_139.json') as f:
+        with open('./tests/data/pokemon_139.json') as f:
             data = json.load(f)
             result_weaknesses = self.calc.calc_weakness(data)
             expected_weaknesses = src.type_weakness.TypeWeakness()
@@ -29,7 +29,7 @@ class Test_Calculations(unittest.TestCase):
             self.assertEqual(vars(expected_weaknesses), vars(result_weaknesses))
 
         # check when pokemon has 1 typee
-        with open('./tests/support/pokemon_025.json') as f:
+        with open('./tests/data/pokemon_025.json') as f:
             data = json.load(f)
             result_weaknesses = self.calc.calc_weakness(data)
             expected_weaknesses = src.type_weakness.TypeWeakness()
@@ -42,7 +42,7 @@ class Test_Calculations(unittest.TestCase):
 
 
     def test_get_attack_stat_for_level(self):
-        with open('./tests/support/pokemon_139.json') as f:
+        with open('./tests/data/pokemon_139.json') as f:
             data = json.load(f)
 
             # Verify when level is set to 1 
@@ -80,7 +80,7 @@ class Test_Calculations(unittest.TestCase):
 
 
     def test_get_defense_stat_for_level(self):     
-        with open('./tests/support/pokemon_139.json') as f:
+        with open('./tests/data/pokemon_139.json') as f:
             data = json.load(f)
 
             # Verify when level is set to 50
@@ -111,7 +111,7 @@ class Test_Calculations(unittest.TestCase):
 
 
     def test_get_sp_attack_stat_for_level(self):      
-        with open('./tests/support/pokemon_139.json') as f:
+        with open('./tests/data/pokemon_139.json') as f:
             data = json.load(f)
 
             # Verify when level is set to 50
@@ -142,7 +142,7 @@ class Test_Calculations(unittest.TestCase):
 
 
     def test_get_sp_defense_stat_for_level(self):       
-        with open('./tests/support/pokemon_139.json') as f:
+        with open('./tests/data/pokemon_139.json') as f:
             data = json.load(f)
 
             # Verify when level is set to 50
@@ -173,7 +173,7 @@ class Test_Calculations(unittest.TestCase):
 
 
     def test_get_speed_stat_for_level(self):
-        with open('./tests/support/pokemon_139.json') as f:
+        with open('./tests/data/pokemon_139.json') as f:
             data = json.load(f)
 
             # Verify when level is set to 50
