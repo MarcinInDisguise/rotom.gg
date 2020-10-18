@@ -37,7 +37,7 @@ https://discord.com/api/oauth2/authorize?client_id=733002946752807084&permission
 #### For development
 Start with cloning repository
 ```
-git clone https://github.com/RirisuV/rotom.gg.git
+git clone https://github.com/MarcinInDisguise/rotom.gg.git
 ```
 
 Configuration is loaded from .env file located in root directory. Create it and paste your discord token of your bot.
